@@ -1,1 +1,116 @@
-<p>cliente works!</p>
+<div class="container-fluid mt-4" style="width: 95%;">
+    <h2>Clientes</h2>
+    <div class="d-flex justify-content-between mb-3">
+        <button  class="btn btn-success">
+            <i class="fa-solid fa-plus"></i>
+            Registrar Cliente
+        </button>
+    </div>
+    
+    <table class="table table-striped table-bordered mt-3">
+        <thead class="table-dark">
+            <tr style="text-align: center;">
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Email</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Acciones Pedidos</th>
+                <th scope="col">Acciones Cliente</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cliente of clientes; let i = index" style="text-align: center;">
+                <td>{{i + 1}}</td>
+                <td hidden>{{cliente.id}}</td>
+                <td>{{cliente.nombre}}</td>
+                <td>{{cliente.apellido}}</td>
+                <td>{{cliente.email}}</td>
+                <td>{{cliente.telefono}}</td>
+                <td>{{cliente.direccion}}</td>
+                <td>
+                    <button class="btn btn-success btn-sm me-1">
+                        <i class="fa fa-cart-plus"></i> Agregar Pedido
+                    </button>
+                    <button class="btn btn-secondary btn-sm me-1" [routerLink]="['/pedidos', cliente.id]">
+                        <i class="fa fa-arrows-to-eye"></i> Ver pedidos
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm me-1">
+                        <i class="fa fa-edit"></i> Editar
+                    </button>
+                    <button class="btn btn-danger btn-sm ms-1" (click)="cliente.id">
+                        <i class="fa fa-trash"></i> Eliminar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="showPedidoForm" class="mt-4 border p-3">
+        <h3>Nuevo Pedido para: {{ pedidoCliente?.nombre }} {{ pedidoCliente?.apellido }}</h3>
+        <div class="form-row mb-3">
+            <div class="form-group col-md-5">
+                <label for="productoSelect">Producto:</label>
+            <!-- 
+                <select class="form-control" [(ngModel)]="productoSeleccionado" name="productoSelect">
+                    <option [ngValue]="null">-- Selecciona Producto --</option>
+                    <option *ngFor="let producto of productos" [ngValue]="producto">
+                        {{ producto.nombre }} - ${{ producto.precio }}
+                    </option>
+                </select>
+            -->
+            </div>
+            <div class="form-group col-md-3">
+                <label for="cantidad">Cantidad:</label>
+                <!--
+                <input type="number" class="form-control" [(ngModel)]="cantidadSeleccionada" name="cantidad" min="1" />
+                -->
+            </div>
+            <div class="form-group col-md-2 d-flex align-items-end">
+                <button class="btn btn-outline-success w-100">
+                    <i class="fa fa-cart-plus"></i> Agregar
+                </button>
+            </div>
+        </div>
+    
+        
+
+    <div *ngIf="showForm" style="margin-top: 20px;">
+        <h3>{{textoModal}}</h3>
+        <form>
+            <input type="hidden" readonly formControlName="id">
+
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" class="form-control" formControlName="nombre" maxlength="30">
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input id="apellido" class="form-control" formControlName="apellido" maxlength="30">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" class="form-control" formControlName="email" type="email" maxlength="50">
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input id="telefono" class="form-control" formControlName="telefono" maxlength="10" minlength="10">
+            </div>
+
+            <div class="form-group">
+                <label for="direccion">Dirección</label>
+                <input id="direccion" class="form-control" formControlName="direccion" maxlength="100">
+            </div>
+
+            <button type="submit" class="btn btn-success" [disabled]="clienteForm.invalid" style="margin-top: 20px;">
+                Guardar
+            </button>
+        </form>
+    </div>
+</div>
